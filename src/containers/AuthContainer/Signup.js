@@ -64,7 +64,7 @@ export default class SignUp extends Component<Props> {
           onChangeText={(text) => this.setState({nome: text})}
           placeholder="Ex: João Silva"
           value={this.state.nome}
-          placeholderTextColor='white'
+          placeholderTextColor='#47476b'
           
         />
         <TextInput
@@ -72,7 +72,7 @@ export default class SignUp extends Component<Props> {
           onChangeText={(text) => this.setState({email: text})}
           placeholder="Ex: fulano@gmail.com"
           value={this.state.email}
-          placeholderTextColor='white'
+          placeholderTextColor='#47476b'
         />
         <TextInput
           style={styles.inputStyle}
@@ -80,28 +80,28 @@ export default class SignUp extends Component<Props> {
           placeholder="Senha aqui"
           secureTextEntry
           value={this.state.senha}
-          placeholderTextColor='white'
+          placeholderTextColor='#47476b'
         />
         <TextInput
           style={styles.inputStyle}
           onChangeText={(text) => this.setState({cidade: text})}
           placeholder="Ex: Belo Horizonte"
           value={this.state.cidade}
-          placeholderTextColor='white'
+          placeholderTextColor='#47476b'
         />
         <TextInput
           style={styles.inputStyle}
           onChangeText={(text) => this.setState({telefone: text})}
-          placeholder="Ex: (31) 99999=9999"
+          placeholder="Ex: (31) 99999-9999"
           value={this.state.telefone}
-          placeholderTextColor='white'
+          placeholderTextColor='#47476b'
         />
         <TextInput
           style={styles.inputStyle}
           onChangeText={(text) => this.setState({idade: text})}
           placeholder="Ex: 19 anos"
           value={this.state.idade}
-          placeholderTextColor='white'
+          placeholderTextColor='#47476b'
         />
         <TouchableOpacity onPress={()=> this.askRegister()} style={styles.registerButton} >
           <Text style={styles.buttonText}>Cadastrar</Text>
@@ -224,6 +224,8 @@ const styles = StyleSheet.create({
     borderBottomColor: 'white', 
     borderBottomWidth: 1,
     margin: width * 0.04,
+    color:'white'
+
     
   },
   titleText:{

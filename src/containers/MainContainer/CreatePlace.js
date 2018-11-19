@@ -12,7 +12,6 @@ import { Actions } from 'react-native-router-flux';
 import firebase from "firebase";
 import { Icon } from 'react-native-elements'
 import { Button } from 'react-native-elements';
-
 //import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -26,123 +25,125 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class EditarPerfil extends Component<Props> {
+export default class CreatePlace extends Component<Props> {
 
   constructor(props) {
     super(props);
     this.state = {
       deviceWidth: width,
       deviceHeight: height,
-      userData:{}
-
+      nome: "",
+      cidade: "",
+      endereco: "",
+      telefone: "",
+      abertura: "",
+      fechamento: ""
     };
   }
 
-  componentDidMount(){
-    firebase.auth().onAuthStateChanged(function(user){
-    
-       if(user){
-       console.log("Meus Usuarios",user.email)
-       firebase.database().ref("Users")
-       .orderByChild("email")
-       .equalTo(user.email)
-       .once('value')
-       .then((snapshot)=>{
-           console.log("Meus Usuario0333s",snapshot.val());
-           this.setState({      userData:snapshot.val()[user.uid]   })
-                  
-       })
-       
-     }else{
-       
-     }
-    }.bind(this));
-  }
-  valueChanged(field, text){
-    let userData = this.state.userData;
-    userData[field] = text;
+reagisterPlace(){
+    const placeData={
+        nome:this.state.nome,
+        cidade:this.state.cidade,
+        endereco:this.state.telefone,
+        telefone:this.state.telefone,
+        abertura:this.state.abertura,
+        fechamento:this.state.fechamento
 
-    this.setState({userData: userData});
-  }
-
-  maskTEL(v) {
-    return new Promise((resolve, reject) => {
-        if(!v){
-            resolve("");
-            return;
-        }
-        v = v.replace(/\D/g, "");
-        v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
-        v = v.replace(/(\d)(\d{4})$/, "$1-$2");
-        resolve(v);
-    });
-}
-
-applyMask(value){
-    this.maskTEL(value).then(masked => {
-        let userData = this.state.userData;
-        userData.telefone = masked;
-        this.setState({
-            userData: userData
+    }
+    firebase.database().ref("Places/")
+    .push(placeData)
+    .then((snapshot)=>{
+        const placeId = snapshot.key;
+        firebase.database().ref("Places/"+placeId)
+        .update({
+            uid:placeData,
         })
+
+        
+        alert("Criado com suceso!");
     })
-}
+    }
+
+    askSave(){
+        Alert.alert(
+          'Novo local',
+          'Confirma o cadastro desse novo local?',
+          [
+            {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'OK', onPress: () => 
+              this.reagisterPlace()
+            },
+          ],
+          { cancelable: false }
+        )
+      }
+
+
+
+
 
   render() {
     return (
       <ImageBackground source={require('../../Images/background.png')} style={styles.container}>
-        <TouchableOpacity onPress={()=> this.backToDashboar()} style={styles.backButton} >
+        <TouchableOpacity onPress={()=> this.backToLogin()} style={styles.backButton} >
           <Icon name='arrow-back'  color='#00aced'/> 
         </TouchableOpacity>
         
        
-        <Text style={styles.titleText}>Editar Usuario</Text>
+        <Text style={styles.titleText}>Cadastro de Locais</Text>
 
         <TextInput
           style={styles.inputStyle}
-          onChangeText={(text) => this.valueChanged("nome", text)}
-          placeholder="Ex: João Silva"
-          value={this.state.userData.nome}
-          placeholderTextColor='white'
+          onChangeText={(text) => this.setState({nome: text})}
+          placeholder="ex: bar do jão"
+          value={this.state.nome}
+          placeholderTextColor='#47476b'
           
         />
         <TextInput
           style={styles.inputStyle}
-          onChangeText={(text) => this.valueChanged("email", text)}
-          placeholder="fulano@gmail.com"
-          value={this.state.userData.email}
-          placeholderTextColor='white'
-        />
-        
-        <TextInput
-          style={styles.inputStyle}
-          onChangeText={(text) => this.valueChanged("cidade", text)}
+          onChangeText={(text) => this.setState({cidade: text})}
           placeholder="Ex: Belo Horizonte"
-          value={this.state.userData.cidade}
-          placeholderTextColor='white'
+          value={this.state.email}
+          placeholderTextColor='#47476b'
         />
         <TextInput
           style={styles.inputStyle}
-          onChangeText={(text) => this.applyMask(text)}
+          onChangeText={(text) => this.setState({endereco: text})}
+          placeholder="Ex: rua dos tamoios"
+          value={this.state.senha}
+          placeholderTextColor='#47476b'
+        />
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={(text) => this.setState({telefone: text})}
           placeholder="Ex: (31) 999999999"
-          value={this.state.userData.telefone}
-          placeholderTextColor='white'
+          value={this.state.telefone}
+          placeholderTextColor='#47476b'
         />
         <TextInput
           style={styles.inputStyle}
-          onChangeText={(text) => this.valueChanged("idade", text)}
-          placeholder="Ex: 19 anos"
-          value={this.state.userData.idade}
-          placeholderTextColor='white'
+          onChangeText={(text) => this.setState({abertura: text})}
+          placeholder="22:00"
+          value={this.state.abertura}
+          placeholderTextColor='#47476b'
         />
-        <TouchableOpacity  onPress={()=> this.askUpdate()} style={styles.registerButton} >
-          <Text style={styles.buttonText}>Atualizar</Text>
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={(text) => this.setState({fechamento: text})}
+          placeholder="23:00"
+          value={this.state.fechamento}
+          placeholderTextColor='#47476b'
+        />
+        <TouchableOpacity onPress={()=> this.askSave()} style={styles.registerButton} >
+          <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
       </ImageBackground>
     );
   }
 
-  backToDashboar(){
+  backToLogin(){
     Actions.dashboard();
   }
 
@@ -201,36 +202,8 @@ applyMask(value){
       })
       
   }
-  askUpdate(){
-    Alert.alert(
-      'Atualizar',
-      'Confirma atualizar com os seguintes dados?\nNome: ' + this.state.userData.nome + "\nEmail: " + this.state.userData.email ,
-      [
-        {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () => 
-          //this.confirmRegister()
-          this.updateUser()
-        },
-      ],
-      { cancelable: false }
-    )
-  }
-  
-  updateUser(){
-    const userData = this.state.userData;
-    const userUid = this.state.userUid;
-    firebase.database().ref("Users/" + userUid)
-    .update(userData)
-    .then(() => {
-        Actions.dashboard();
-        Alert.alert("Sucesso!", "Dados atualizados.")
-    })
-  }
-  
-  }
 
-
-
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -18,78 +18,55 @@ componentDidMounth(){
 
 */
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, ImageBackground, View, FlatList, Dimensions, Image } from 'react-native';
+import {  StyleSheet, Text, TouchableOpacity, ImageBackground, View, FlatList, Dimensions, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import firebase from "firebase";
 import EditarPerfil from '../AuthContainer/EditarPerfil';
 import { Icon } from 'react-native-elements'
+import _ from 'lodash'
 
 var { height, width } = Dimensions.get('window');
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+
 
 type Props = {};
-export default class Dashboard extends Component<Props> {
+export default class PlaceClassDatail extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      
+     
       deviceWidth: width,
       deviceHeight: height,
+      dataLocal:props.dataLocal,
 
     };
   }
-
+      
   render() {
     return (
       <ImageBackground source={require('../../Images/background.png')} style={styles.container}>
-        
-        <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignContent:'center',marginLeft:'25%'}}> 
-        <TouchableOpacity onPress={() => this.createPlace()} style={styles.askButton} >
-          <Text style={styles.buttonText}>Criar Locais</Text>
+       
+        <TouchableOpacity onPress={()=> this.backToList()} style={styles.backButton} >
+          <Icon name='arrow-back'  color='#00aced'/>          
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.logout()} style={styles.askButton} >
-          <Text style={styles.buttonText}>Sair</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.editar()} style={styles.askButton} >
-          <Text style={styles.buttonText2}>Editar Perfil</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.goToPlaceListe()} style={styles.askButton} >
-          <Text style={styles.buttonText2}>Places</Text>
-        </TouchableOpacity>
-        </View>
-        
+        <Text style={{marginLeft:width * 0.45,top:'-10%', fontSize:18}}>Places  </Text>
+        <Text>{this.state.dataLocal.cidade}</Text>
+        <Text>{this.state.dataLocal.nome}</Text>
+        <Text>{this.state.dataLocal.endereco}</Text>
+        <Text>{this.state.dataLocal.telefone}</Text>
+        <Text>{this.state.dataLocal.abertura}</Text>
+        <Text>{this.state.dataLocal.fechamento}</Text>
+       
 
       </ImageBackground>
     );
   }
-  logout() {
-    firebase.auth().signOut()
-      .then(function () {
-        Actions.login();
-      })
-      .catch(function (error) {
-
-      });
-
-
-
-
+  backToList(){
+      Actions.pop();
   }
-  editar() {
-    Actions.editarperfil();
-  }
-  createPlace(){
-    Actions.createplace();
-  }
-  goToPlaceListe(){
-    Actions.placelist();
-  }
+  
+
+
 }
 
 const styles = StyleSheet.create({
@@ -150,5 +127,12 @@ const styles = StyleSheet.create({
   },
   askButton: {
     margin: width * 0.02
-  }
+  },
+  backButton: {
+    
+    borderRadius: 10,
+    padding: 10,
+    margin: 20,
+    alignSelf: "flex-start"
+  },
 });

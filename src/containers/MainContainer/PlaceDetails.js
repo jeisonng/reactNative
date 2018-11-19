@@ -8,6 +8,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text,ImageBackground, View} from 'react-native';
+import firebase from "firebase";
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',

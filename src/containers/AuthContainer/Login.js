@@ -55,7 +55,7 @@ export default class Login extends Component<Props> {
               onChangeText={(text) => this.setState({email: text})}
               placeholder="Ex: fulano@gmail.com"
               value={this.state.email}
-              placeholderTextColor="white"
+              placeholderTextColor="#47476b"
               underlineColorAndroid='transparent'
             
             />
@@ -69,7 +69,7 @@ export default class Login extends Component<Props> {
           placeholder="Senha"
           secureTextEntry
           value={this.state.senha}
-          placeholderTextColor="white"
+          placeholderTextColor="#47476b"
           underlineColorAndroid='transparent'
         />
         </View>
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     fontSize:16,
     paddingLeft:25,
     backgroundColor:'rgba(0,0,0,0.35)',
-    color:'rgba(255,255,255,0.2)',
+    color:'white',
     //marginHorizontal:-27,
     
     

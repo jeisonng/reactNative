@@ -12,6 +12,9 @@ import Dashboard from './containers/MainContainer/Dashboard'
 import BarDetails from './containers/MainContainer/PlaceDetails'
 import TestContainer from './containers/AuthContainer/TestContainer'
 import EditarPerfil from './containers/AuthContainer/EditarPerfil'
+import CreatePlace from './containers/MainContainer/CreatePlace'
+import PlaceData from './containers/MainContainer/placeData'
+import PlaceClassDatail from './containers/MainContainer/PlacesClassDatail';
 
 class RouterComponent extends Component {
   constructor (props) {
@@ -43,6 +46,20 @@ class RouterComponent extends Component {
                <Scene
                 key='editarperfil'
                 component={EditarPerfil} />
+                <Scene
+                key='createplace'
+                component={CreatePlace} />
+                <Scene
+                key='placedata'
+                component={CreatePlace} />
+                <Scene
+                key='placelist'
+                component={PlaceData}
+                />
+                <Scene
+                key='placeClassDatail'
+                component={PlaceClassDatail}
+                />
             </Scene>
           </Scene>
         </Router>
