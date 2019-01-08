@@ -23,12 +23,12 @@ class App extends Component {
     //Posso Fazer qualquer tipo de configuração global aqui como por exemplo o Firebase
     if (firebase.apps.length === 0) {
       firebase.initializeApp({
-        apiKey: "AIzaSyBS-Ltt7gmDwVDtI5T3JzrNMlJ-ug66s_8",
-        authDomain: "flitter-db915.firebaseapp.com",
-        databaseURL: "https://flitter-db915.firebaseio.com",
-        projectId: "flitter-db915",
-        storageBucket: "flitter-db915.appspot.com",
-        messagingSenderId: "205532639397"
+        apiKey: "",
+        authDomain: "",
+        databaseURL: "",
+        projectId: "",
+        storageBucket: "",
+        messagingSenderId: ""
       })
     }
     SplashScreen.close({
